@@ -7,7 +7,7 @@
 - [x] Crear proyecto frontend (React)
 
 - [x] Inicializar repositorio
-    - [ ] `git init`
-    - [ ] Primer commit: `git add . && git commit -m "init"`
+    - [x] `git init`
+    - [x] Primer commit: `git add . && git commit -m "init"`
 
-- [ ] Conectar con Github
+- [x] Conectar con Github
