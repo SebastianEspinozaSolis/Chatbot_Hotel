@@ -2,8 +2,8 @@
 TODO Conexion con Ollama
 - [x] Conectarse al modelo de Ollama
 - [ ] Crear Parametros de consulta
-- [ ] Manejar respuestas y errores
-- [ ] Agregar Informacion del hotel
+- [x] Manejar respuestas y errores
+- [x] Agregar Informacion del hotel
 
 TODO Conexion con Frontend
 - [ ] Configurar API
@@ -70,15 +70,23 @@ def preguntar_chatbot(pregunta):
         "stream":False,
         "temperature":0.7
     }
-
-    # Hacer la solicitud POST al servidor de Ollama, con url, parametros y tiempo de espera
-    response = requests.post(url, json=payload, timeout=30)
-    # Verificar que la solicitud fue exitosa
-    response.raise_for_status()
-    # Obtener la respuesta en formato JSON
-    resultado = response.json()
-    # Devolver la respuesta del chatbot
-    return resultado.get("response")
+    # Curso si funciona todo correcto
+    try:
+        # Hacer la solicitud POST al servidor de Ollama, con url, parametros y tiempo de espera
+        response = requests.post(url, json=payload, timeout=30)
+        # Verificar que la solicitud fue exitosa
+        response.raise_for_status()
+        # Obtener la respuesta en formato JSON
+        resultado = response.json()
+        # Devolver la respuesta del chatbot
+        return resultado.get("response")
+    
+    # Avisar fallo de conexion
+    except requests.exceptions.ConnectionError:
+        return "Error: No se puede conectar al chatbot, contacte con personal"
+    # Avisar fallo otro
+    except Exception as error:
+        return f"Error al hace la consulta: {str(error)}"
 
 # Ejemplo de uso
 pregunta = input("Pregunta al chatbot: ").strip()
