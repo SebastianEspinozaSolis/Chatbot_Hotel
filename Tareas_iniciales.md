@@ -1,4 +1,4 @@
-# Tareas iniciales (TODO)
+# TODO Tareas iniciales
 
 - [x] Verificar e instalar herramientas
     - [x] Comprobar Node.js y npm: `node -v` / `npm -v`
