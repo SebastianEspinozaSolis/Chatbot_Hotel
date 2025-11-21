@@ -104,12 +104,23 @@ respuesta = preguntar_chatbot(pregunta)
 print(respuesta)
 
 
-#Endpoint de prueba para verificar que se crea la API
+#Endpoint
 #Asignacion de ruta y metodo
-@app.route('/api/prueba_Flask', methods=['GET'])
-def prueba_Flask():
-    # Respuesta de prueba
-    return ({'status':'ok','message':'Backend funciona'})
+#FIXME: no esta en uso con React aun
+@app.route('/api/chat', methods=['POST'])
+def chat():
+    data = request.get_json()
+
+    if not data or 'message' not in data:
+        return jsonify({'error':'No se recibió ningún mensaje'}), 400
+    
+    pregunta = data['message']
+    respuesta = preguntar_chatbot(pregunta)
+
+    return jsonify({
+        'response': respuesta,
+        'status': 'success'
+    })
 
 # Ejecutar la aplicacion Flask
 if __name__ == '__main__':
