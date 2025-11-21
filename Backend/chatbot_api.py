@@ -6,6 +6,7 @@ TODO Conexion con Ollama
 - [x] Agregar Informacion del hotel
 
 TODO Conexion con Frontend
+- [x] Crear endpoint de prueba
 - [ ] Configurar API
 - [ ] Probar integracion
 
@@ -14,6 +15,15 @@ TODO Mejoras futuras
 '''
 # Para conectarse a Ollama y hacer preguntas al modelo
 import requests
+
+#Librerias para Flask, que es para crear la API
+from flask import Flask, request, jsonify
+# CORS para permitir solicitudes entre diferentes puertos/dominios
+from flask_cors import CORS
+
+# Crear la aplicacion Flask
+app = Flask(__name__)
+CORS(app)
 
 # Información del hotel para el prompt
 INFO_HOTEL = """
@@ -92,3 +102,16 @@ def preguntar_chatbot(pregunta):
 pregunta = input("Pregunta al chatbot: ").strip()
 respuesta = preguntar_chatbot(pregunta)
 print(respuesta)
+
+
+#Endpoint de prueba para verificar que se crea la API
+#Asignacion de ruta y metodo
+@app.route('/api/prueba_Flask', methods=['GET'])
+def prueba_Flask():
+    # Respuesta de prueba
+    return ({'status':'ok','message':'Backend funciona'})
+
+# Ejecutar la aplicacion Flask
+if __name__ == '__main__':
+    print("Flask esta funcionando en http://localhost:5000")
+    app.run(debug=True, port=5000)
