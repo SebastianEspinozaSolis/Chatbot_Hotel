@@ -16,11 +16,11 @@ TODO Mejoras futuras
 
 TODO Echar ojo a FastAPI, es mejor para crear endpoints ligeros y rapidos
 - [ ] Cambiar la implementacion a FastAPI
-    -[ ] Instalar FastAPI y las dependencias necesarias
-    -[ ] Hacer el endpoint con FastAPI
-    -[ ] Probar funcionamiento de FastAPI
-    -[ ] Ajustar el frontend si es necesario
-    -[ ] Probar integracion completa
+    -[x] Instalar FastAPI y las dependencias necesarias
+    -[x] Hacer el endpoint con FastAPI
+    -[x] Probar funcionamiento de FastAPI
+    -[x] Ajustar el frontend si es necesario
+    -[x] Probar integracion completa
 
 
 TODO hacerlo con colab, para aumentar capacidad de procesamiento
@@ -150,11 +150,17 @@ def preguntar_chatbot(pregunta):
 
 
 #Endpoint
-#Verificando que funcione
-@app.get("/api/prueba")
-async def prueba():
-    return {"status":"ok","message":"Backend funcionando"}
-
+#Principal del chat
+@app.post("/api/chatbot")
+async def chatbot(request: ChatRequest):
+    if not request.message or not request.message.strip():
+        raise HTTPException(status_code=400, detail="El mensaje no puede estar vacio")
+    
+    respuesta = preguntar_chatbot(request.message)
+    return ChatResponse(
+        response=respuesta, 
+        status="success"
+        )
 #Ejecutar el servidor
 if __name__=="__main__":
     print("Iniciado en http://localhost:8000")
