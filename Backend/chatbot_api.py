@@ -7,11 +7,17 @@ TODO Conexion con Ollama
 
 TODO Conexion con Frontend
 - [x] Crear endpoint de prueba
-- [ ] Configurar API
-- [ ] Probar integracion
+- [x] Configurar API
+- [x] Probar integracion
 
 TODO Mejoras futuras
 - [ ] Conexion con base de datos
+
+
+TODO Echar ojo a FastAPI, es mejor para crear endpoints ligeros y rapidos
+
+
+TODO hacerlo con colab, para aumentar capacidad de procesamiento
 '''
 # Para conectarse a Ollama y hacer preguntas al modelo
 import requests
@@ -99,15 +105,14 @@ def preguntar_chatbot(pregunta):
         return f"Error al hace la consulta: {str(error)}"
 
 # Ejemplo de uso
-pregunta = input("Pregunta al chatbot: ").strip()
-respuesta = preguntar_chatbot(pregunta)
-print(respuesta)
+# pregunta = input("Pregunta al chatbot: ").strip()
+# respuesta = preguntar_chatbot(pregunta)
+# print(respuesta)
 
 
 #Endpoint
 #Asignacion de ruta y metodo
-#FIXME: no esta en uso con React aun
-@app.route('/api/chat', methods=['POST'])
+@app.route('/api/chatbot', methods=['POST'])
 def chat():
     data = request.get_json()
 

@@ -11,7 +11,7 @@ TODO Tareas de front
   - [x] Manejar lados del chat (izquierda para bot, derecha para usuario)
   - [x] Hacer scroll automático al final del chat
   - [x] Agregar iconos y estilos con Tailwind CSS
-- [ ] Conectar con backend (pendiente de implementar en backend)
+- [x] Conectar con backend (pendiente de implementar en backend)
 */
 
 // funciones especificas de React
@@ -68,11 +68,26 @@ export default function ChatbotHotel() {
     // espacio para llamar al backend
     try {
       /* TODO: Conectar con backend
-      - [ ] Enviar el mensaje del usuario al backend
-      - [ ] Recibir la respuesta del bot
-      - [ ] Agregar la respuesta del bot a los mensajes
-
+      - [x] Enviar el mensaje del usuario al backend
+      - [x] Recibir la respuesta del bot
+      - [x] Agregar la respuesta del bot a los mensajes
+    
       */
+
+      const response = await fetch('http://localhost:5000/api/chatbot', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: mensajeUsuario }),
+      });
+
+      const data = await response.json();
+
+      setMessages(prev => [...prev,{
+        role:'bot',
+        content: data.response || 'Lo siento, no pude obtener una respuesta en este momento.'
+      }]);
     } 
     // Manejo de errores en la conexión con el backend
     catch (error) {
