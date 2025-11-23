@@ -15,6 +15,12 @@ TODO Mejoras futuras
 
 
 TODO Echar ojo a FastAPI, es mejor para crear endpoints ligeros y rapidos
+- [ ] Cambiar la implementacion a FastAPI
+    -[ ] Instalar FastAPI y las dependencias necesarias
+    -[ ] Hacer el endpoint con FastAPI
+    -[ ] Probar funcionamiento de FastAPI
+    -[ ] Ajustar el frontend si es necesario
+    -[ ] Probar integracion completa
 
 
 TODO hacerlo con colab, para aumentar capacidad de procesamiento
@@ -22,14 +28,47 @@ TODO hacerlo con colab, para aumentar capacidad de procesamiento
 # Para conectarse a Ollama y hacer preguntas al modelo
 import requests
 
-#Librerias para Flask, que es para crear la API
-from flask import Flask, request, jsonify
-# CORS para permitir solicitudes entre diferentes puertos/dominios
-from flask_cors import CORS
+#Librerias para FastAPI
+# fastapi para crear el backend, httpexception para manejar errores
+# corsmiddleware para permitir conectarse desde react
+# pydantic basemodel para definir el modelo de datos
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
-# Crear la aplicacion Flask
-app = Flask(__name__)
-CORS(app)
+#uvicorn para correr el servidor
+import uvicorn
+
+
+# Crear la aplicacion FastAPI
+app = FastAPI(
+    title="Chatbot Hotel Quinchamalí",
+    description="API para el chatbot del Hotel Quinchamalí",
+    version="1.0.0"
+)
+
+#Configurar CORS para permitir solicitudes desde React
+# Permitir solo desde localhost:3000 (React)
+# Permitir enviar credenciales
+# Permitir metodos como GET, POST, etc.
+# Permitir todos los headers 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+#Modelo Pydantic para validar los datos de entrada
+class ChatRequest(BaseModel):
+    message:str
+
+#Modelo Pydantic para validar los datos de salida
+class ChatResponse(BaseModel):
+    response:str
+    status:str
+
 
 # Información del hotel para el prompt
 INFO_HOTEL = """
@@ -111,23 +150,13 @@ def preguntar_chatbot(pregunta):
 
 
 #Endpoint
-#Asignacion de ruta y metodo
-@app.route('/api/chatbot', methods=['POST'])
-def chat():
-    data = request.get_json()
+#Verificando que funcione
+@app.get("/api/prueba")
+async def prueba():
+    return {"status":"ok","message":"Backend funcionando"}
 
-    if not data or 'message' not in data:
-        return jsonify({'error':'No se recibió ningún mensaje'}), 400
-    
-    pregunta = data['message']
-    respuesta = preguntar_chatbot(pregunta)
-
-    return jsonify({
-        'response': respuesta,
-        'status': 'success'
-    })
-
-# Ejecutar la aplicacion Flask
-if __name__ == '__main__':
-    print("Flask esta funcionando en http://localhost:5000")
-    app.run(debug=True, port=5000)
+#Ejecutar el servidor
+if __name__=="__main__":
+    print("Iniciado en http://localhost:8000")
+    # Ejecutar el servidor uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
