@@ -1,0 +1,81 @@
+```mermaid
+graph TB
+    subgraph Presentacion["<b>CAPA DE PRESENTACIÓN</b>"]
+        User["👤 Cliente/Huésped"]
+        
+        subgraph Canales["Canales de Interacción"]
+            Totem["🖥️ Tótem Autoservicio<br/>(Hardware + UI)"]
+            Web["🌐 Página Web Hotel"]
+            WA["💬 WhatsApp"]
+            PC["💻 PC Personal Hotel"]
+        end
+    end
+    
+    subgraph Logica["<b>CAPA DE LÓGICA DE NEGOCIO</b>"]
+        API["🔌 API Gateway"]
+        
+        subgraph Servicios["Servicios Core"]
+            Chatbot["🤖 Chatbot<br/>(Texto/Voz)"]
+            NLU["🧠 Motor NLU<br/>(Procesamiento Lenguaje)"]
+            Reservas["📅 Sistema de Reservas"]
+            Controlador["⚙️ Controlador Principal"]
+        end
+        
+        subgraph Integraciones["Módulo de Integraciones"]
+            IntBooking["🔗 Integración Booking"]
+            IntPago["💳 Integración Pasarela Pago"]
+            IntWeb["🌐 Integración Web Externa"]
+        end
+    end
+    
+    subgraph Datos["<b>CAPA DE DATOS</b>"]
+        BD["🗄️ Base de Datos Principal<br/>(Reservas, Clientes, Configuración)"]
+        Cache["⚡ Caché<br/>(Sesiones, Respuestas)"]
+    end
+    
+    subgraph Externos["<b>SISTEMAS EXTERNOS</b>"]
+        Booking["Booking.com"]
+        PasarelaPago["Pasarela de Pago"]
+        WebExt["Web del Hotel Externa"]
+    end
+    
+    User --> Totem
+    User --> Web
+    User --> WA
+    User --> PC
+    
+    Totem -->|HTTPS| API
+    Web -->|HTTPS| API
+    WA -->|HTTPS| API
+    PC -->|HTTPS| API
+    
+    API --> Chatbot
+    API --> Reservas
+    API --> Controlador
+    
+    Chatbot <-->|NLP| NLU
+    Chatbot --> Controlador
+    Reservas --> Controlador
+    
+    Controlador --> IntBooking
+    Controlador --> IntPago
+    Controlador --> IntWeb
+    
+    Chatbot --> BD
+    Reservas --> BD
+    Controlador --> BD
+    
+    Chatbot --> Cache
+    NLU --> Cache
+    
+    IntBooking -->|API REST| Booking
+    IntPago -->|API REST| PasarelaPago
+    IntWeb -->|API REST| WebExt
+    
+    style Presentacion fill:#e8f5e9,stroke:#2e7d32,stroke-width:3px
+    style Logica fill:#e3f2fd,stroke:#1565c0,stroke-width:3px
+    style Datos fill:#fff3e0,stroke:#ef6c00,stroke-width:3px
+    style Externos fill:#fce4ec,stroke:#c2185b,stroke-width:3px
+    style Servicios fill:#bbdefb,stroke:#1976d2,stroke-width:2px
+    style Integraciones fill:#c5cae9,stroke:#3f51b5,stroke-width:2px
+```

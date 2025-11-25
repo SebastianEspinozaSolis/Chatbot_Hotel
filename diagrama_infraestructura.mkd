@@ -1,0 +1,38 @@
+```mermaid
+graph TD
+    Actor["👤 Cliente / Huésped"]
+    
+    subgraph Totem["Tótem autoservicio"]
+        T1["📱 Pantalla táctil"]
+        T2["💻 Procesador, RAM, CPU, Almacenamiento"]
+        T3["🔌 Periféricos, Sistema operativo, Carcasa"]
+    end
+    
+    subgraph Dispositivos["Dispositivo del cliente"]
+        D1["🌐 Web Hotel"]
+        D2["💬 WhatsApp"]
+    end
+    
+    subgraph Cloud["☁️ Cloud"]
+        API["API Gateway"]
+        
+        subgraph Server["Servidor"]
+            S1["💾 RAM, Procesador"]
+            S2["📦 Almacenamiento, sistema operativo"]
+            S3["⚡ Disponibilidad"]
+        end
+    end
+    
+    Actor --> Totem
+    Actor --> Dispositivos
+    
+    Totem -->|HTTPS| API
+    Dispositivos -->|HTTPS| API
+    
+    API --> Server
+    
+    style Cloud fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style Totem fill:#f5f5f5,stroke:#333,stroke-width:2px
+    style Dispositivos fill:#f5f5f5,stroke:#333,stroke-width:2px
+    style Server fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+```

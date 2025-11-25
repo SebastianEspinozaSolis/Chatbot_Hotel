@@ -1,0 +1,32 @@
+```mermaid
+graph LR
+    Cliente["👤 Cliente"]
+    
+    subgraph Infraestructura["<b>Infraestructura</b>"]
+        Totem["Tótem<br/>(Hardware: pantalla,<br/>SO, entre otros)"]
+    end
+    
+    subgraph Presentacion["<b>Presentación</b>"]
+        UI["Interfaz y Experiencia<br/>de Usuario<br/>(UI / UX)"]
+    end
+    
+    subgraph Logica["<b>Lógica</b>"]
+        Controlador["Controlador"]
+        Backend["Backend"]
+    end
+    
+    subgraph Datos["<b>Datos</b>"]
+        BD["Base de datos"]
+    end
+    
+    Cliente <--> Totem
+    Totem --> UI
+    UI --> Controlador
+    Controlador <--> Backend
+    Backend <--> BD
+    
+    style Infraestructura fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style Presentacion fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style Logica fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
+    style Datos fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+```

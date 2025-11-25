@@ -1,0 +1,35 @@
+```mermaid
+graph LR
+    Usuario["👤 Usuario"]
+    
+    subgraph Proveedores["<b>Proveedores</b>"]
+        Web["Página Web"]
+        WA["WhatsApp"]
+    end
+    
+    subgraph Integrador["<b>Integrador</b>"]
+        Chatbot["Chatbot<br/>━━━━━━<br/>Texto<br/>Voz"]
+    end
+    
+    subgraph NLU_Box["<b>NLU</b>"]
+        NLU["Natural Language<br/>Understanding"]
+    end
+    
+    subgraph Facilitador["<b>Facilitador</b>"]
+        BDD["BDD"]
+    end
+    
+    Usuario <--> Proveedores
+    
+    Proveedores --> Chatbot
+    
+    Chatbot -->|NLP| NLU
+    NLU -->|Respuesta| Chatbot
+    
+    NLU <--> BDD
+    
+    style Proveedores fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style Integrador fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style NLU_Box fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
+    style Facilitador fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+```

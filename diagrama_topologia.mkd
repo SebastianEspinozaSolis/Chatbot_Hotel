@@ -1,0 +1,50 @@
+```mermaid
+graph TD
+    subgraph Cliente["<b>Capa Cliente</b>"]
+        subgraph Hotel["Red Local Hotel"]
+            A[Tótem Interactivo Recepción]
+            B[PCs Personal]
+        end
+        
+        subgraph Externos["Dispositivos Externos"]
+            C[Web Hotel]
+            D[WhatsApp]
+        end
+    end
+    
+    subgraph Servidor["<b>Capa Servidor</b>"]
+        E[API Gateway]
+        
+        subgraph Apps["Aplicaciones"]
+            F[Chatbot]
+            G[Sistema de Reservas]
+        end
+        
+        H[(Base de datos)]
+    end
+    
+    subgraph SistemasExt["<b>Sistemas Externos</b>"]
+        I[Booking entre otros]
+        J[Web del Hotel]
+        K[Pasarela de Pago]
+    end
+    
+    A -->|HTTPS| E
+    B -->|HTTPS| E
+    C -->|HTTPS| E
+    D -->|HTTPS| E
+    
+    E --> F
+    E --> G
+    
+    F --> H
+    G --> H
+    
+    G -->|API REST| I
+    G -->|API REST| J
+    G -->|API REST| K
+    
+    style Cliente fill:#f9f9f9,stroke:#333,stroke-width:2px
+    style Servidor fill:#f9f9f9,stroke:#333,stroke-width:2px
+    style SistemasExt fill:#f9f9f9,stroke:#333,stroke-width:2px
+```
