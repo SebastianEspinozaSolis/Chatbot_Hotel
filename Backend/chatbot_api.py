@@ -15,7 +15,7 @@ TODO Mejoras futuras
 
 
 TODO Echar ojo a FastAPI, es mejor para crear endpoints ligeros y rapidos
-- [ ] Cambiar la implementacion a FastAPI
+- [x] Cambiar la implementacion a FastAPI
     -[x] Instalar FastAPI y las dependencias necesarias
     -[x] Hacer el endpoint con FastAPI
     -[x] Probar funcionamiento de FastAPI
