@@ -95,7 +95,7 @@ Restaurante: 12:00-23:00 hrs
 SERVICIOS:
 WiFi gratuito, Estacionamiento ($5.000), Servicio a la habitación, Spa Tao, Jacuzzi, Lavandería, Caja de seguridad, Café-Bar, Sala de conferencias, Ascensor
 
-Si preguntan sobre temas no relacionados con el hotel, responde: "Solo puedo ayudarte con información del Hotel Quinchamalí."
+Las preguntas que te realice responde solo con esta informacion que te entrego, no es necesario que busques en internet."
 """
 # FIXME: Cambiar modelo de Ollama a 3b, ya que Servicios no los considera
 
