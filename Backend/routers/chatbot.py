@@ -1,3 +1,15 @@
+"""
+La función `chatbot_endpoint` en esta aplicación FastAPI maneja las solicitudes de chat entrantes,
+valida el mensaje y devuelve una respuesta de un servicio de chatbot.
+
+El parámetro `request` en la función `chatbot_endpoint` es de tipo `ChatRequest`,
+que es un modelo de Pydantic definido en el módulo `models.schemas`. Representa el cuerpo de la
+solicitud del endpoint `/chatbot` y contiene un campo `message`.
+ChatRequest
+El endpoint `/chatbot` devuelve un objeto `ChatResponse` con la respuesta del servicio
+de chatbot y un estado de "success".
+"""
+
 from fastapi import APIRouter, HTTPException
 from models.schemas import ChatRequest, ChatResponse
 from services.ollama_service import preguntar_chatbot

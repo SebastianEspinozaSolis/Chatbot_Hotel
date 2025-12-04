@@ -1,3 +1,4 @@
+#Prompt que contiene la información del hotel para responder a las consultas de los usuarios.
 INFO_HOTEL = """
 Eres el asistente del Hotel Quinchamalí en Chillán, Chile. Ayuda a los clientes con información del hotel.
 

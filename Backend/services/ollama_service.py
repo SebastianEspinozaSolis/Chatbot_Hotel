@@ -1,3 +1,15 @@
+"""
+La función `preguntar_chatbot` envía una pregunta a un chatbot utilizando un modelo y parámetros
+especificados, manejando diferentes tipos de excepciones que pueden ocurrir durante el proceso.
+
+La función `preguntar_chatbot` recibe una pregunta como entrada y la envía a una
+API de chatbot para obtener una respuesta. Aquí se describen los parámetros utilizados en la función:
+La función `preguntar_chatbot` devuelve la respuesta del chatbot basada en la pregunta
+proporcionada. Si la solicitud es exitosa, devuelve la respuesta del chatbot. Si ocurre un error de
+conexión, devuelve un mensaje indicando que no se puede conectar con el chatbot y aconseja contactar
+al personal. Si la solicitud expira, devuelve un mensaje indicando que la solicitud al chat ha
+excedido el tiempo de espera.
+"""
 import requests
 from config import OLLAMA_URL, MODEL_NAME, TEMPERATURE, TIMEOUT
 from prompts.hotel_info import INFO_HOTEL
