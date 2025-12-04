@@ -13,11 +13,24 @@ y ejecuta el servidor.
 # TODO [ ] Conectar con base de datos
 from fastapi import FastAPI
 from config import HOST, PORT, ALLOWED_ORIGINS, ALLOW_CREDENTIALS, ALLOW_METHODS, ALLOW_HEADERS
+from contextlib import asynccontextmanager
+from database.mongodb import MongoDB
 from routers import chatbot
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
-app = FastAPI(title="Hotel Quinchamalí Chatbot API")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Inicializar la conexión a la base de datos al iniciar la aplicación
+    await MongoDB.connect_db()
+    yield
+    # Cerrar la conexión a la base de datos al finalizar la aplicación
+    await MongoDB.close_db()
+
+app = FastAPI(
+    title="Hotel Quinchamalí Chatbot API",
+    lifespan = lifespan
+    )
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,

@@ -13,3 +13,8 @@ TIMEOUT = 30
 #Configuracion del servidor
 HOST = "0.0.0.0"
 PORT = 8000
+
+#MongoDB 
+MONGODB_URL = "mongodb://localhost:27017/"
+DATABASE_NAME = "hotel_quinchamali"
+COLLECTION_NAME = "chat_historial"

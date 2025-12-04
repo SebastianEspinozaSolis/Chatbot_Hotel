@@ -13,8 +13,10 @@ de chatbot y un estado de "success".
 from fastapi import APIRouter, HTTPException
 from models.schemas import ChatRequest, ChatResponse
 from services.ollama_service import preguntar_chatbot
+from services.chat_history_service import guardar_historial_chat
+from database.mongodb import get_collection
 
-router = APIRouter(prefix="/api")
+router = APIRouter(prefix="/api", tags=["chatbot"])
 
 @router.post("/chatbot")
 async def chatbot_endpoint(request: ChatRequest):
@@ -23,7 +25,28 @@ async def chatbot_endpoint(request: ChatRequest):
     
     respuesta = preguntar_chatbot(request.message)
 
+    try:
+        await guardar_historial_chat(
+            mensaje_usuario=request.message,
+            respuesta_chatbot=respuesta
+        )
+    except Exception as e:
+        print(f"Error al guardar el historial del chat: {str(e)}")
+
     return ChatResponse(
         response=respuesta,
         status="success"
     )
+
+
+# Endpoint de depuración: obtener últimos registros del historial
+@router.get("/debug/chat_history")
+async def debug_chat_history(limit: int = 10):
+    col = get_collection("chat_historial")
+    cursor = col.find({}).sort("_id", -1).limit(limit)
+    items = []
+    async for doc in cursor:
+        # convertir ObjectId a string si existe
+        doc["_id"] = str(doc.get("_id"))
+        items.append(doc)
+    return {"count": len(items), "items": items}
