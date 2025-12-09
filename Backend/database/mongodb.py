@@ -1,3 +1,4 @@
+# Crea la clase MongoDB para manejar la conexión a la base de datos MongoDB y colecciones
 from motor.motor_asyncio import AsyncIOMotorClient
 from config import MONGODB_URL, DATABASE_NAME
 

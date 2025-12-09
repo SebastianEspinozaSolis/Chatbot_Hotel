@@ -1,3 +1,4 @@
+# Modelo Pydantic para representar un mensaje de chat y una respuesta de ejemplo
 from datetime import datetime
 from pydantic import BaseModel, Field
 

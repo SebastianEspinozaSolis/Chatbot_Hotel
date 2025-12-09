@@ -10,7 +10,7 @@ Este archivo configura una aplicación FastAPI para la API del chatbot del Hotel
 En resumen: este script inicia la API, habilita CORS, registra las rutas del chatbot
 y ejecuta el servidor.
 """
-# TODO [ ] Conectar con base de datos
+# TODO [x] Conectar con base de datos
 from fastapi import FastAPI
 from config import HOST, PORT, ALLOWED_ORIGINS, ALLOW_CREDENTIALS, ALLOW_METHODS, ALLOW_HEADERS
 from contextlib import asynccontextmanager
@@ -27,10 +27,13 @@ async def lifespan(app: FastAPI):
     # Cerrar la conexión a la base de datos al finalizar la aplicación
     await MongoDB.close_db()
 
+# Crear la instancia principal de FastAPI
 app = FastAPI(
     title="Hotel Quinchamalí Chatbot API",
     lifespan = lifespan
     )
+
+#Permite solicitudes desde otros orígenes
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
@@ -39,7 +42,9 @@ app.add_middleware(
     allow_headers=ALLOW_HEADERS,
 )
 
+# Incluir el router del chatbot
 app.include_router(chatbot.router)
 
+# Ejecutar uvicorn si se ejecuta el archivo
 if __name__ == "__main__":
     uvicorn.run(app, host=HOST, port=PORT)

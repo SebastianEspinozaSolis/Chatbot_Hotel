@@ -9,6 +9,9 @@ async def guardar_historial_chat(mensaje_usuario: str, respuesta_chatbot: str):
     Parámetros:
     - mensaje_usuario (str): El mensaje enviado por el usuario.
     - respuesta_chatbot (str): La respuesta generada por el chatbot.
+    - timestamp (datetime): La marca de tiempo del mensaje.
+    Retorna:
+    - inserted_id (str): El ID del documento insertado en la colección.
     """
     collection = get_collection(COLLECTION_NAME)
     message = {

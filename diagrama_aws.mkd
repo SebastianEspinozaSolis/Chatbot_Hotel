@@ -1,0 +1,80 @@
+```mermaid
+graph TB
+    subgraph Internet["🌐 Internet"]
+        Users["👥 Usuarios<br/>(Huéspedes)"]
+        WhatsApp["💬 WhatsApp"]
+    end
+    
+    subgraph CloudFront["☁️ Amazon CloudFront"]
+        CDN["CDN Global<br/>Distribución de contenido"]
+    end
+    
+    subgraph S3["📦 Amazon S3"]
+        StaticWeb["React Frontend<br/>Sitio Web Estático"]
+    end
+    
+    subgraph ACM["🔒 AWS Certificate Manager"]
+        SSL["Certificados SSL/TLS"]
+    end
+    
+    subgraph VPC["🏢 Amazon VPC"]
+        subgraph PublicSubnet["Subnet Pública"]
+            ALB["⚖️ Application Load Balancer"]
+        end
+        
+        subgraph PrivateSubnet["Subnet Privada"]
+            EC2["🖥️ Amazon EC2<br/>FastAPI Backend<br/>Python"]
+            
+            subgraph AIServices["🤖 Servicios IA"]
+                Bedrock["Amazon Bedrock<br/>o SageMaker<br/>(Ollama equivalente)"]
+            end
+        end
+        
+        subgraph DataLayer["💾 Capa de Datos"]
+            DocumentDB["📊 Amazon DocumentDB<br/>MongoDB compatible"]
+            
+            
+        end
+    end
+    
+    subgraph External["🔗 Servicios Externos"]
+        Booking["Booking.com API"]
+        Payment["Pasarela de Pago"]
+        Translate["Amazon Translate<br/>DeepL API"]
+        Transcribe["Amazon Transcribe<br/>Whisper equivalente"]
+    end
+    
+    subgraph Totem["🖥️ Tótem Físico"]
+        TotemHW["Hardware Tótem<br/>Pantalla Táctil"]
+    end
+    
+    Users -->|HTTPS| CDN
+    WhatsApp -->|HTTPS| ALB
+    TotemHW -->|HTTPS| ALB
+    
+    CDN --> StaticWeb
+    CDN -->|HTTPS| ALB
+    
+    SSL -.->|Cifrado| CDN
+    SSL -.->|Cifrado| ALB
+    
+    ALB --> EC2
+    
+    EC2 --> DocumentDB
+    EC2 --> Bedrock
+    EC2 --> Translate
+    EC2 --> Transcribe
+    
+    EC2 -->|API REST| Booking
+    EC2 -->|API REST| Payment
+    
+    style Internet fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style CloudFront fill:#ff9900,stroke:#ff6600,stroke-width:3px
+    style S3 fill:#569a31,stroke:#3d7021,stroke-width:3px
+    style VPC fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style EC2 fill:#ff9900,stroke:#ff6600,stroke-width:2px
+    style DocumentDB fill:#3b48cc,stroke:#1a237e,stroke-width:2px
+    style Bedrock fill:#ff6b6b,stroke:#c92a2a,stroke-width:2px
+    style External fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style Totem fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+```
